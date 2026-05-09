@@ -17,11 +17,9 @@ async function loadProducts() {
 
   try {
     const res = await fetch(API);
-
     if (!res.ok) throw new Error("Failed to load products");
 
     const products = await res.json();
-
     container.innerHTML = "";
 
     products.forEach(p => {
@@ -191,7 +189,7 @@ function updateReminderDate() {
 }
 
 /* =========================
-   PLACE ORDER (SAFE VERSION)
+   PLACE ORDER (FIXED UI FLOW)
 ========================= */
 async function placeOrder() {
   const email = document.getElementById("customerEmail").value;
@@ -209,16 +207,40 @@ async function placeOrder() {
 
     const data = await res.json();
 
-    document.getElementById("orderSuccess").classList.remove("hidden");
-
-    document.getElementById("orderSuccess").innerHTML = `
-      ✅ Order placed successfully!<br><br>
-      🧾 Order ID: <strong>${data.orderId}</strong><br><br>
-      📦 ${document.getElementById("deliveryDate").innerText}
-    `;
-
+    // CLEAR CART DATA
     cart = [];
     updateCart();
+
+    // RESET UI
+    document.getElementById("cartCount").innerText = "0";
+
+    // REPLACE MODAL CONTENT WITH SUCCESS SCREEN
+    document.querySelector("#cartModal .glass").innerHTML = `
+      <div class="text-center py-10">
+
+        <h2 class="text-4xl font-black text-green-500 mb-4">
+          ✅ Order Successful!
+        </h2>
+
+        <p class="text-lg mb-2">Your Order ID:</p>
+
+        <p class="text-2xl font-bold text-orange-500 mb-6">
+          ${data.orderId}
+        </p>
+
+        <p class="text-gray-600 mb-6">
+          ${document.getElementById("deliveryDate").innerText}
+        </p>
+
+        <button
+          onclick="location.reload()"
+          class="px-6 py-3 rounded-xl bg-gradient-to-r from-green-500 to-blue-500 text-white font-bold hover:scale-105 transition"
+        >
+          Continue Shopping
+        </button>
+
+      </div>
+    `;
 
   } catch (err) {
     alert("Order failed. Check backend connection.");
