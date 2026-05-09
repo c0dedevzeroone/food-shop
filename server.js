@@ -4,7 +4,6 @@ const path = require("path");
 
 const app = express();
 
-<<<<<<< HEAD
 /* =========================
    MIDDLEWARE
 ========================= */
@@ -12,56 +11,30 @@ app.use(cors());
 app.use(express.json());
 
 /* =========================
-   STATIC FRONTEND (IMPORTANT)
-   This serves /public/index.html automatically
+   STATIC FRONTEND
 ========================= */
 app.use(express.static(path.join(__dirname, "public")));
 
-/* =========================
-   HOMEPAGE ROUTE (FOR SAFETY)
-   Ensures "/" always works
-========================= */
+/* HOME ROUTE */
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
 /* =========================
-   PRODUCTS API
+   PRODUCTS
 ========================= */
 const products = require("./products");
 
-=======
-/* middleware */
-app.use(cors());
-app.use(express.json());
-
-/* serve static images */
-app.use(express.static(path.join(__dirname, "public")));
-
-/* products */
-const products = require("./products");
-
-/* orders storage (temporary) */
-let orders = [];
-
-/* GET products */
->>>>>>> 18bea617244d6b5829f7edd24832032a614e2a9d
 app.get("/api/products", (req, res) => {
   res.json(products);
 });
 
-<<<<<<< HEAD
 /* =========================
-   ORDERS STORAGE (TEMP - RAM ONLY)
+   ORDERS (TEMP STORAGE)
 ========================= */
 let orders = [];
 
-/* =========================
-   CHECKOUT API
-========================= */
-=======
-/* checkout */
->>>>>>> 18bea617244d6b5829f7edd24832032a614e2a9d
+/* CHECKOUT */
 app.post("/api/checkout", (req, res) => {
   const order = req.body;
 
@@ -79,34 +52,18 @@ app.post("/api/checkout", (req, res) => {
   res.json({
     message: "Order placed successfully!",
     orderId: newOrder.id,
-<<<<<<< HEAD
-    estimatedReady: new Date(
-      Date.now() + 3 * 24 * 60 * 60 * 1000
-    )
-  });
-});
-
-/* =========================
-   VIEW ORDERS (TEST ONLY)
-========================= */
-=======
     estimatedReady: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000)
   });
 });
 
-/* view orders */
->>>>>>> 18bea617244d6b5829f7edd24832032a614e2a9d
+/* VIEW ORDERS */
 app.get("/api/orders", (req, res) => {
   res.json(orders);
 });
 
-<<<<<<< HEAD
 /* =========================
-   START SERVER (RENDER SAFE)
+   START SERVER
 ========================= */
-=======
-/* start server */
->>>>>>> 18bea617244d6b5829f7edd24832032a614e2a9d
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
