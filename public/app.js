@@ -3,7 +3,7 @@ let cart = [];
 /* =========================
    🌐 BACKEND URL (RENDER)
 ========================= */
-const BASE_URL = "https://food-shop-j5pa.onrender.com";
+const BASE_URL = "https://deyylicious-delicacies.onrender.com";
 
 const API = `${BASE_URL}/api/products`;
 const API_IMG = BASE_URL;
